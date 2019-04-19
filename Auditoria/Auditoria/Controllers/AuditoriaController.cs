@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Auditoria.Controllers
 {
-    [Route("api/auditoria")]
+    [Route("v1/api/auditoria")]
     [ApiController]
     public class AuditoriaController : ControllerBase
     {
@@ -20,14 +20,14 @@ namespace Auditoria.Controllers
             new Produto { Codigo =4, Nome = "Livro D", Quantidade =20,  Tipo = "Estudo" }
         };
 
-        [Route("produto/{codigoProduto}")]
+        [Route("produtos/{codigoProduto}")]
         [HttpGet]
-        public ActionResult<IEnumerable<string>> ConsultaEstoque(int codigoProduto)
+        public ActionResult<IEnumerable<string>> ConsultaEstoque(int codigoProduto, [FromQuery]int quantidade)
         {
-            return Ok(produtos.Where(a => a.Codigo == codigoProduto && a.Quantidade > 0).Any());
+            return Ok(produtos.Where(a => a.Codigo == codigoProduto && a.Quantidade > quantidade).Any());
         }
 
-        [Route("produto/{codigoProduto}")]
+        [Route("produtos/{codigoProduto}")]
         [HttpPut]
         public ActionResult<IEnumerable<string>> AlteraEstoque(int codigoProduto, [FromQuery]int quantidade)
         {
